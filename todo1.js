@@ -9,41 +9,23 @@ var arr = [];
 // }); 
 
 let value = null;
-console.log(value);
-debugger;
 
-function addItem(){ // module pattern
+
+function myFunction(){
    
    value = document.getElementById("inputfield").value;
-   if (value){
-   var task = new Object();
    
+   var task = new Object();
    task = {
        text: value,
        id : new Date().getUTCMilliseconds(),
        Completed : false
    }
-  
+   document.getElementById("button1").innerHTML = task.text;
    arr.push(task);
    console.log(arr);
-   addItemList(value);
-   return console.log(task); // making task public object by returning it
-}
 }
 
-// const node = document.getElementbyId("#intputfield");
-// node.addEventListener('inputfield', function (event) {
-//     if (event.keyCode === 13|| event.which ===13){
-//    addItem();
-//     }
-// });
-function addItemList(value){
-    // var text = document.createElement('li');
-    document.getElementById("taskList").innerHTML = value;
-   
-    addItem.innerHtml = value;
-    focusOnInput = document.getElementById("inputfield").focus();
-}
 
 
 
