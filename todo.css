@@ -10,7 +10,7 @@ box-sizing: border-box;
 
 
 .container {
-    width : 80%;
+    width : 100%;
     align-content: center;
     margin: 0 auto;
    
@@ -83,21 +83,23 @@ position : absolute;
 
 
 /* Style the input fields */
-.input-field {
+#inputfield {
   width: 100%;
   padding: 10px;
   outline: none;
   border-radius: 15px;
   height: 50px;
   font-size: 15px;
+  margin-left: -20px;
+  cursor : pointer;
 }
 
-.input-field:focus {
+#inputfield:focus {
   border: 2px solid dodgerblue;
 }
 
 /* Set a style for the submit button */
-.btn {
+#btn {
   background-color: dodgerblue;
   color: white;
   padding: 15px 20px;
@@ -122,19 +124,22 @@ form h2 {position : relative;
 form {
     position : relative;
     margin: 20px;
+    width: 100%;
 }
 .wrapper{
     text-align: center;
 }
 
-.btn:hover {
+#btn:hover {
     
   opacity: 1;
 }
-.button1{ position: relative;
-    width : 100%;
+
+#taskList_wrapper {
+    width: 100%;
+    padding-left: 30px;
     height: 50px;
-   border : solid silver;
+    border : solid silver;
    border-width: 2px;
    border-style: inset;
    border-radius : 15px;
@@ -143,13 +148,25 @@ form {
    box-shadow: 5px;
    padding : 10px;
 }
-.button1 img {
+#taskList{ position: inline-block;
+    width : 95%;
+    height: 50px;
+    overflow: scroll;
+   cursor: pointer;
+   float : left;
+}
+ #taskList img {
+    width: 5%;
     display : inline-block;
     float: right;
     margin-left : 20px;
-
-    position : baseline; 
 }
-.button1 img:hover {
-    background-color : silver;
+
+
+#icons img:hover{
+    background-color: silver;
+    cursor: pointer;
+}
+.task_completed {
+    
 }

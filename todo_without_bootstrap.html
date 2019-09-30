@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel = "stylesheet" type = "text/css" href = "todo.css">
-    <script type='text/javascript' src = "todo.js" > </script>
+    
 </head>
 <body>
  <div class = "container" >
@@ -30,13 +30,13 @@
 <form >
     <h2>TODO LIST</h2>
     <div class="input-container">
-      <i class="fa fa-user icon"></i>
-      <input class="input-field" type="text" placeholder="TASK" >
+      
+      <input id="inputfield" onfocus = "this.value =''" type="text" placeholder="TASK" >
     </div>
   
     <div class = "wrapper">
-  
-    <button onclick = "getInput()" type="submit" class="btn">ADD</button>
+   <!-- <input type = "button" class = "btn" vlaue = "ADD" onclick = "getInput();"> -->
+    <button id="btn"  type = "button" onclick = "addItem()"  >ADD</button>
 
     </div>
     
@@ -44,17 +44,19 @@
 
  <!-- //sample added element -->
 
- 
-     <div  class = "button1">
+ <div id = "taskList_wrapper">
+     <div  id  = "taskList">
             SAMPLE 
-            <img src = "_ionicons_svg_md-checkmark-circle.svg" width = "20px" heigth = "20px">
-            <img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px">
-            <img src = "_ionicons_svg_md-trash.svg" width = "20px" heigth = "20px">
+        </div>
+        <div id = "icons">
+            <img src = "_ionicons_svg_md-checkmark-circle.svg" class= "task_completed" width = "20px" heigth = "20px">
+            <img src = "_ionicons_svg_md-create.svg" class = "task_edit" width = "20px" heigth = "20px">
+            <img src = "_ionicons_svg_md-trash.svg" class = " task_delete" width = "20px" heigth = "20px">
      </div>
-    
+</div>
  
 
 </div> 
-
+<script type='text/javascript' src = "todo.js" > </script>
 </body>
 </html>
