@@ -49,7 +49,7 @@ header{
 }
 
 .nav a {
-    margin-left: 130px;
+    margin-left: 100px;
     text-decoration: none;
     color: #444;
     text-transform: uppercase;
@@ -72,7 +72,7 @@ margin-top: -20px;
 width: 0%; 
 transition: all ease-in-out 250ms;
 position : absolute;
-margin-left: 130px;
+margin-left: 100px;
 }
 
 .nav a:hover::before{
@@ -175,8 +175,8 @@ li img
     float: right;
     width: 20px;
     height: 20px;
-    margin-left: 20px;
-    margin-top: -15px;
+    /* margin-left: 20px;
+    margin-top: -15px; */
 
 }
  .taskList{ position: inline-block;
@@ -193,6 +193,7 @@ li img
     float: right;
     width : 20px;
     height: 20px;
+    /* margin-top : 7px; */
 
    
 }
@@ -208,4 +209,27 @@ li img:hover{
   
     text-decoration: line-through!important;
     
+}
+span {
+    float: right;
+ 
+}
+/* span .icons {
+    margin-top: 20px;
+    width : 80px;
+    height : 20px;
+} */
+
+span .delete_button {
+    width : 20px;
+    height : 20px
+}
+
+span .edit_button {
+    width : 20px;
+    height : 20px
+}
+span .complete_button {
+    width : 20px;
+    height : 20px
 }

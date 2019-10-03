@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel = "stylesheet" type = "text/css" href = "todo.css">
-    <script type='text/javascript' src = "todo.js" > </script>
+
 </head>
 <body>
  <div class = "container" >
@@ -17,10 +16,10 @@
  <div class = "nav">
  
  <ul>
-    <li><a href = "#"> Add New Task </a></li>
-    <li><a href = "#"> Delete Selected</a></li>
-    <li><a href = "#"> Clear All</a></li>
-    <li><a href = "#"> Mark All Compelete </a></li>
+    <li id = "markAllComplete"><a href = "#"> Mark All Complete </a></li>
+    <li id = "deleteAll"><a href = "#"> Delete All</a></li>
+    <li id = ""><a href = "#"> Delete Selected </a></li>
+    
 
 </ul>
 </div>
@@ -30,31 +29,26 @@
 <form >
     <h2>TODO LIST</h2>
     <div class="input-container">
-      <i class="fa fa-user icon"></i>
-      <input class="input-field" type="text" placeholder="TASK" >
+      
+      <input id="inputfield" onfocus = "this.value =''" type="text" placeholder="TASK" >
     </div>
   
     <div class = "wrapper">
-  
-    <button onclick = "getInput()" type="submit" class="btn">ADD</button>
+   <!-- <input type = "button" class = "btn" vlaue = "ADD" onclick = "getInput();"> -->
+    <button id="btn"  type = "button" >ADD</button>
 
     </div>
     
  </form>
 
- <!-- //sample added element -->
-
+ <!-- text to be displayed as part of list on UI -->
+  
+  <ul id = "taskList_wrapper"> 
+        
+ </ul>
  
-     <div  class = "button1">
-            SAMPLE 
-            <img src = "_ionicons_svg_md-checkmark-circle.svg" width = "20px" heigth = "20px">
-            <img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px">
-            <img src = "_ionicons_svg_md-trash.svg" width = "20px" heigth = "20px">
-     </div>
-    
- 
-
-</div> 
+ <link rel = "stylesheet" type = "text/css" href = "todo.css">
+ <script type='text/javascript' src = "todo.js" > </script> 
 
 </body>
 </html>

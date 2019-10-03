@@ -1,16 +1,24 @@
 var arr = []; var ids = [];
-document.getElementById("btn").addEventListener ('click', function ()
-{
-    var value = document.getElementById("inputfield").value;
-     if (value) {
-     var task = createNewObject(value);
-     console.log ("this is task", task);
-     objectArray(task);
-     chnageInDOM(task);
-     }
+document.getElementById("btn").addEventListener ('click', inputFromUser);
+document.getElementById("inputfield").addEventListener("keydown", function (e)
+    {
+    if (e.keyCode === 13)          //checks whether the pressed key is "Enter"
+        inputFromUser();
+    
 });
+function inputFromUser (){
+    
+        var value = document.getElementById("inputfield").value;
+         if (value) {
+         var task = createNewTask(value);
+         console.log ("this is task", task);
+         taskArray(task);
+         chnageInDOM(task);
+         }
+    }
 
-function createNewObject(text){
+
+function createNewTask(text){
 
     
    var  task = {
@@ -25,7 +33,7 @@ function createNewObject(text){
     return task;
     }
     
-    function objectArray(task){
+    function taskArray(task){
         
         arr.push(task);
         console.log(arr);
@@ -35,7 +43,7 @@ function createNewObject(text){
     function chnageInDOM (task){
     
         var html,newhtml;
-      html = ' <li  class = "value" id = "%id%" > %Value% <div class = "icons"><div class = "complete_button"><img src = "_ionicons_svg_md-checkmark-circle.svg" width = "20px" heigth = "20px"><div class = "edit_button"><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"><div class = "delete_button"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></div></div></div> </div> </li>'
+      html = ' <li   class = "taskList" id = "%id%" > %Value% <span class = "icons"><span class= "complete_button" button = "complete"><img src = "_ionicons_svg_md-checkmark-circle.svg" width = "20px" heigth = "20px"></button><span class = "edit_button" button = edit><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></button><span class = "delete_button" button = "delete"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></button></span></span></span> </span> </li>'
      
      newhtml = html.replace('%Value%',task.text);
      
@@ -53,6 +61,8 @@ function deleteSelectedItem (event) // event is need to know target element
       itemID = parseInt(event.target.parentNode.parentNode.parentNode.parentNode.parentNode.id); // to get the unique id of object to be removed form list
 
       if (itemID){
+        
+          
           //creating array of Id to find the indexof id to be delted
           ids = arr.map(function(task){
            return task.id;
@@ -72,6 +82,8 @@ function deleteSelectedItem (event) // event is need to know target element
 function deletingIdFromUI(selectorID) {
 
    var element = document.getElementById(selectorID);
+
+   console.log("element",document.getElementById(selectorID))
    element.parentNode.removeChild(element);
 }
 
@@ -84,13 +96,16 @@ function compeleteSelectedItem (event) {
     itemID = parseInt(event.target.parentNode.parentNode.parentNode.id); // to get the unique id of object to be removed form list
     
     if (itemID)
-    {   ids = arr.map(function(task){
+
+    {  
+         ids = arr.map(function(task){
         return task.id;});
          var indexComplete = ids.indexOf(itemID);
          
         }
    if ( indexComplete !== -1 && indexComplete !== undefined) 
             { arr[indexComplete].Completed = "true";
+            
         
     var completeTask = document.getElementById(itemID);
     completeTask.classList.add("checked");}
@@ -100,22 +115,28 @@ function compeleteSelectedItem (event) {
 document.querySelector("#taskList_wrapper").addEventListener('click', editSelectedItem );
 
 function editSelectedItem(event){
-
-    itemID = parseInt (event.target.parentNode.parentNode.parentNode.parentNode.id);
+    var itemID;
+    itemID = parseInt(event.target.parentNode.parentNode.parentNode.parentNode.id); // removed parseInt form here
     console.log(event.target.parentNode.parentNode.parentNode.parentNode.id);
-
     if (itemID)
-    {   ids = arr.map(function(task){
-        return task.id;});
-         var indexEdit = ids.indexOf(itemID);
-         
-        }
-    if (indexEdit !== -1 && indexEdit !== undefined)  
-        { var editTask = document.getElementById(itemID);
-            editTask.setAttribute("contenteditable", true);
-           
-        }
+    {ids = arr.map(function(task){
+    return task.id;});
+     indexEdit = ids.indexOf(itemID);
 
+    {  // editing the UI 
+        document.getElementById(itemID).setAttribute("contenteditable", true);
+        document.getElementById(itemID).addEventListener("keydown", function (e)
+     {
+     if (e.keyCode === 13){  
+   
+      
+     var value = document.getElementById(itemID).textContent;  
+     console.log(value);
+     // editing the array of task
+     arr[indexEdit].text.textContent = value;
+    }  });
+ }
+}
 }
 
 // mark all complete
@@ -128,7 +149,7 @@ document.getElementById("markAllComplete").addEventListener ('click', function (
   
  });
 
-// delete all objects
+// delete all tast for UI
 document.getElementById("deleteAll").addEventListener ('click', function ()  
 
 {var allTaskInUI=  document.getElementsByClassName("value"); // deleting objects from UI
@@ -136,17 +157,21 @@ console.log(allTaskInUI);
 while (allTaskInUI[0]){
     allTaskInUI[0].parentNode.removeChild(allTaskInUI[0]);
 }
-// resetting the value of arr 
+// resetting the todo list
 arr= [];
 
 });
 
 //edit all
-document.getElementById("editAll").addEventListener ('click', function () 
-{ var allTaskToEdit = document.getElementsByClassName("value"); // setting edit in the UI
-  for (let i = 0; i < arr.length; i++){
-    allTaskToEdit[i].setAttribute("contenteditable", true);
-  }
+// document.getElementById("editAll").addEventListener ('click', function () 
+// { var allTaskToEdit = document.getElementsByClassName("value"); // setting edit in the UI
+//   for (let i = 0; i < arr.length; i++){
+//     allTaskToEdit[i].setAttribute("contenteditable", true);
+//   }
 
-});
+// });
 
+
+/* function refershList(){
+
+ }*/
