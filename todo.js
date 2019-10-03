@@ -11,7 +11,7 @@ document.getElementById("btn").addEventListener ('click', function ()
 });
 
 function createNewObject(text){
-//innerHtml is not efficent, it takes a lot of memory
+
     
    var  task = {
         text: text,
@@ -29,7 +29,7 @@ function createNewObject(text){
         
         arr.push(task);
         console.log(arr);
-         //called here because now the taskObject is not empty
+         //called here, now the taskObject is not empty
     }
  //changing DOM and inserting new task on click at add button
     function chnageInDOM (task){
@@ -119,10 +119,34 @@ function editSelectedItem(event){
 }
 
 // mark all complete
-// document.getElementById("markAllComplete").addEventListener ('click', function ()
-// {
+document.getElementById("markAllComplete").addEventListener ('click', function ()
+ { var allTaskInUI=  document.getElementsByClassName("value");
+ for (let i =0; i< arr.length; i++)
+   { arr[i].Completed = "true";
+    allTaskInUI[i].classList.add("checked")};
 
-// }
+  
+ });
 
-// delete all
+// delete all objects
+document.getElementById("deleteAll").addEventListener ('click', function ()  
+
+{var allTaskInUI=  document.getElementsByClassName("value"); // deleting objects from UI
+console.log(allTaskInUI);
+while (allTaskInUI[0]){
+    allTaskInUI[0].parentNode.removeChild(allTaskInUI[0]);
+}
+// resetting the value of arr 
+arr= [];
+
+});
+
 //edit all
+document.getElementById("editAll").addEventListener ('click', function () 
+{ var allTaskToEdit = document.getElementsByClassName("value"); // setting edit in the UI
+  for (let i = 0; i < arr.length; i++){
+    allTaskToEdit[i].setAttribute("contenteditable", true);
+  }
+
+});
+
