@@ -35,7 +35,7 @@ function createNewObject(text){
     function chnageInDOM (task){
     
         var html,newhtml;
-      html = ' <li  id = "%id%" > %Value% <div class = "icons"><div class = "complete_button"><img src = "_ionicons_svg_md-checkmark-circle.svg" width = "20px" heigth = "20px"><div class = "edit_button"><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"><div class = "delete_button"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></div></div></div> </div> </li>'
+      html = ' <li  class = "value" id = "%id%" > %Value% <div class = "icons"><div class = "complete_button"><img src = "_ionicons_svg_md-checkmark-circle.svg" width = "20px" heigth = "20px"><div class = "edit_button"><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"><div class = "delete_button"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></div></div></div> </div> </li>'
      
      newhtml = html.replace('%Value%',task.text);
      
@@ -75,28 +75,54 @@ function deletingIdFromUI(selectorID) {
    element.parentNode.removeChild(element);
 }
 
-// editing the selected task from the todo list
+// complete the selected task from the todo list and mark the compelete property as true
 
 document.querySelector("#taskList_wrapper").addEventListener('click', compeleteSelectedItem );
 
 function compeleteSelectedItem (event) {
     
     itemID = parseInt(event.target.parentNode.parentNode.parentNode.id); // to get the unique id of object to be removed form list
-    console.log (event.target.parentNode.parentNode.parentNode.id);
-    console.log(typeof (itemID));
+    
     if (itemID)
     {   ids = arr.map(function(task){
         return task.id;});
          var indexComplete = ids.indexOf(itemID);
-         console.log("the array of ids Are", ids);
-         console.log("index of id is ", indexComplete);
+         
         }
    if ( indexComplete !== -1 && indexComplete !== undefined) 
             { arr[indexComplete].Completed = "true";
         
     var completeTask = document.getElementById(itemID);
-    console.log("task completed", completeTask);
- 
-  completeTask.classList.toggle("checked");}
+    completeTask.classList.add("checked");}
+}
+// editing the selected item 
+
+document.querySelector("#taskList_wrapper").addEventListener('click', editSelectedItem );
+
+function editSelectedItem(event){
+
+    itemID = parseInt (event.target.parentNode.parentNode.parentNode.parentNode.id);
+    console.log(event.target.parentNode.parentNode.parentNode.parentNode.id);
+
+    if (itemID)
+    {   ids = arr.map(function(task){
+        return task.id;});
+         var indexEdit = ids.indexOf(itemID);
+         
+        }
+    if (indexEdit !== -1 && indexEdit !== undefined)  
+        { var editTask = document.getElementById(itemID);
+            editTask.setAttribute("contenteditable", true);
+           
+        }
+
 }
 
+// mark all complete
+// document.getElementById("markAllComplete").addEventListener ('click', function ()
+// {
+
+// }
+
+// delete all
+//edit all
