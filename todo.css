@@ -201,3 +201,8 @@ li img:hover{
     width : 20px;
     height: 20px;
 } 
+.checked {
+  
+    text-decoration: line-through!important;
+    
+}

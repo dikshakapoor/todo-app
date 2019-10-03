@@ -1,4 +1,4 @@
-var arr = [];
+var arr = []; var ids = [];
 document.getElementById("btn").addEventListener ('click', function ()
 {
     var value = document.getElementById("inputfield").value;
@@ -35,7 +35,7 @@ function createNewObject(text){
     function chnageInDOM (task){
     
         var html,newhtml;
-      html = ' <li  id = "%id%"> %Value% <div class = "icons"><div class = "complete_button"><img src = "_ionicons_svg_md-checkmark-circle.svg" width = "20px" heigth = "20px"><div class = "edit_button"><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"><div class = "delete_button"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></div></div></div> </div> </li>'
+      html = ' <li  id = "%id%" > %Value% <div class = "icons"><div class = "complete_button"><img src = "_ionicons_svg_md-checkmark-circle.svg" width = "20px" heigth = "20px"><div class = "edit_button"><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"><div class = "delete_button"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></div></div></div> </div> </li>'
      
      newhtml = html.replace('%Value%',task.text);
      
@@ -51,8 +51,6 @@ function createNewObject(text){
 function deleteSelectedItem (event) // event is need to know target element
     {
       itemID = parseInt(event.target.parentNode.parentNode.parentNode.parentNode.parentNode.id); // to get the unique id of object to be removed form list
-      
-      ;
 
       if (itemID){
           //creating array of Id to find the indexof id to be delted
@@ -72,7 +70,7 @@ function deleteSelectedItem (event) // event is need to know target element
     }
   
 function deletingIdFromUI(selectorID) {
-   console.log( document.getElementById(selectorID).parentNode);
+
    var element = document.getElementById(selectorID);
    element.parentNode.removeChild(element);
 }
@@ -81,4 +79,24 @@ function deletingIdFromUI(selectorID) {
 
 document.querySelector("#taskList_wrapper").addEventListener('click', compeleteSelectedItem );
 
-function compeleteSelectedItem ()
+function compeleteSelectedItem (event) {
+    
+    itemID = parseInt(event.target.parentNode.parentNode.parentNode.id); // to get the unique id of object to be removed form list
+    console.log (event.target.parentNode.parentNode.parentNode.id);
+    console.log(typeof (itemID));
+    if (itemID)
+    {   ids = arr.map(function(task){
+        return task.id;});
+         var indexComplete = ids.indexOf(itemID);
+         console.log("the array of ids Are", ids);
+         console.log("index of id is ", indexComplete);
+        }
+   if ( indexComplete !== -1 && indexComplete !== undefined) 
+            { arr[indexComplete].Completed = "true";
+        
+    var completeTask = document.getElementById(itemID);
+    console.log("task completed", completeTask);
+ 
+  completeTask.classList.toggle("checked");}
+}
+
