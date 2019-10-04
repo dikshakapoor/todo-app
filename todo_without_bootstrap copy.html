@@ -18,7 +18,7 @@
  <ul>
     <li id = "markAllComplete"><a href = "#"> <strong> Mark All Complete</strong> </a></li>
     <li id = "deleteAll"><a href = "#"><strong> Delete All</strong></a></li>
-    <li id = ""><a href = "#"><strong> Delete Selected </strong> </a></li>
+    <!-- <li id = ""><a href = "#"><strong> Delete Selected </strong> </a></li> -->
     
 
 </ul>
@@ -26,11 +26,11 @@
 
 </header>   
 
-<form >
+<form onsubmit = "return false">
     <h2>TODO LIST</h2>
     <div class="input-container">
       
-      <input id="inputfield" onfocus = "this.value =''" type="text" placeholder="TASK"  >
+      <input id="inputfield" onfocus = "this.value =''"  type="text" placeholder="TASK" onkeypress = "addingTaskByEnter(event)" >
     </div>
   
     <div class = "wrapper">

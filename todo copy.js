@@ -1,11 +1,11 @@
 var arr = []; var ids = [];
 document.getElementById("btn").addEventListener ('click', inputFromUser);
-document.getElementById("inputfield").addEventListener("keydown", function(e)
+function addingTaskByEnter (e)
     {
     if (e.keyCode === 13)          //checks whether the pressed key is "Enter"
         inputFromUser();
-    
-});
+    return false;
+};
 function inputFromUser (){
     
         var value = document.getElementById("inputfield").value;
@@ -133,32 +133,32 @@ function editSelectedItem(event){
     itemID = parseInt(event.target.parentNode.parentNode.parentNode.firstChild.id); // removed parseInt form here
     
     var editTask = document.getElementById(itemID);
-    editTask.classList.remove("edit");
+     editTask.classList.remove("edit");
     if (itemID) {
-        document.getElementById(itemID).focus();
-        
-        console.log(event.target.parentNode.parentNode.parentNode.firstChild.id);
-    if (itemID)
-    {ids = arr.map(function(task){
+    console.log(event.target.parentNode.parentNode.parentNode.firstChild.id);
+    
+    ids = arr.map(function(task){
     return task.id;});
      indexEdit = ids.indexOf(itemID);
-
+     
     {  // editing the UI 
         document.getElementById(itemID).setAttribute("contenteditable", true);
+        document.getElementById(itemID).focus();
         document.getElementById(itemID).addEventListener("keydown", function (e)
      {
      if (e.keyCode === 13){  
        
         editTask.classList.add("edit");
      var value = document.getElementById(itemID).textContent;  
+     document.getElementById(itemID).setAttribute("contenteditable", false);
      console.log(value);
      // editing the array of task
-     arr[indexEdit].text.textContent = value;
+     arr[indexEdit].text = value;
     }  });
     }
 }
 }
-}
+
 
 // mark all complete
 document.getElementById("markAllComplete").addEventListener ('click', function ()
