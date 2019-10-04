@@ -45,7 +45,7 @@ function createNewTask(text){
     function addingTaskInUI (task){
     
         var html,newhtml;
-      html =  '<div class = "card"><div class = "task" id = %id%> %Value% </div><div class = "icon"><button class = "complete"><img src =_ionicons_svg_md-checkmark-circle.svg width = "20px" heigth = "20px"> </button><button class = "remove"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></button><button class = "edit"><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></button></button></div></div>'
+      html =  '<div class = "card"><div class = "task" id = %id%><b>%Value%</b> </div><div class = "icon"><button class = "complete"><img src =_ionicons_svg_md-checkmark-circle.svg width = "20px" heigth = "20px"> </button><button class = "remove"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></button><button class = "edit"><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></button></button></div></div>'
       
      newhtml = html.replace('%Value%',task.text);
      
