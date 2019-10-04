@@ -45,8 +45,8 @@ function createNewTask(text){
     function addingTaskInUI (task){
     
         var html,newhtml;
-      html = ' <li   class = "taskList" id = "%id%" > %Value%  <span class= "complete_button" ><img src = "_ionicons_svg_md-checkmark-circle.svg" width = "20px" heigth = "20px"></span><span class = "edit_button" ><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></span><span class = "delete_button" ><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></span></li>'
-     
+      html =  '<div class = "card"><div class = "task" id = %id%> %Value% </div><div class = "icon"><button class = "complete"><img src =_ionicons_svg_md-checkmark-circle.svg width = "20px" heigth = "20px"> </button><button class = "remove"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></button><button class = "edit"><img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></button></button></div></div>'
+      
      newhtml = html.replace('%Value%',task.text);
      
      newhtml = newhtml.replace('%id%',task.id);// over ridding newhtml
@@ -60,21 +60,20 @@ function createNewTask(text){
 function typeOfEvent(event){
     var eventType = event.target.parentNode.className;
     console.log("the event is ",eventType);
-    if (eventType == "complete_button") 
+    if (eventType == "complete") 
        compeleteSelectedItem(event);
-    else if (eventType == "delete_button") 
+    else if (eventType == "remove") 
        deleteSelectedItem(event);
-    else if(eventType == "edit_button") 
+    else if(eventType == "edit") 
       editSelectedItem(event);
     
 }
 function deleteSelectedItem (event) // event is need to know target element
     {
-      itemID = parseInt(event.target.parentNode.parentNode.id); // to get the unique id of object to be removed form list
-
+      itemID = parseInt(event.target.parentNode.parentNode.parentNode.firstChild.id); // to get the unique id of object to be removed form list
+      console.log("target for delete",event.target.parentNode.parentNode.parentNode.firstChild);
       if (itemID){
-        
-          
+    
           //creating array of Id to find the indexof id to be delted
           ids = arr.map(function(task){
            return task.id;
@@ -84,6 +83,7 @@ function deleteSelectedItem (event) // event is need to know target element
           index = ids.indexOf(itemID);
           
           if (index !== -1){
+              
             deletingIdFromUI(itemID);
               arr.splice(index,1);
              
@@ -95,8 +95,9 @@ function deletingIdFromUI(selectorID) {
 
    var element = document.getElementById(selectorID);
 
-   console.log("element",document.getElementById(selectorID))
-   element.parentNode.removeChild(element);
+   console.log("element",element.parentNode);
+   element.parentNode.parentNode.removeChild(element.parentNode);
+   
 }
 
 // complete the selected task from the todo list and mark the compelete property as true
@@ -105,7 +106,7 @@ function deletingIdFromUI(selectorID) {
 
 function compeleteSelectedItem (event) {
     
-    itemID = parseInt(event.target.parentNode.parentNode.id); // to get the unique id of object to be removed form list
+    itemID = parseInt(event.target.parentNode.parentNode.parentNode.firstChild.id); // to get the unique id of object to be removed form list
     
     if (itemID)
 
@@ -127,10 +128,16 @@ function compeleteSelectedItem (event) {
 // document.querySelector("#taskList_wrapper").addEventListener('click', editSelectedItem );
 
 function editSelectedItem(event){
+    
     var itemID;
-    itemID = parseInt(event.target.parentNode.parentNode.id); // removed parseInt form here
+    itemID = parseInt(event.target.parentNode.parentNode.parentNode.firstChild.id); // removed parseInt form here
+    
+    var editTask = document.getElementById(itemID);
+    editTask.classList.remove("edit");
     if (itemID) {
-        console.log(event.target.parentNode.parentNode.id);
+        document.getElementById(itemID).focus();
+        
+        console.log(event.target.parentNode.parentNode.parentNode.firstChild.id);
     if (itemID)
     {ids = arr.map(function(task){
     return task.id;});
@@ -141,8 +148,8 @@ function editSelectedItem(event){
         document.getElementById(itemID).addEventListener("keydown", function (e)
      {
      if (e.keyCode === 13){  
-   
-      
+       
+        editTask.classList.add("edit");
      var value = document.getElementById(itemID).textContent;  
      console.log(value);
      // editing the array of task
