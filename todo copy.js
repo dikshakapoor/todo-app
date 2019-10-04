@@ -9,12 +9,14 @@ document.getElementById("inputfield").addEventListener("keydown", function(e)
 function inputFromUser (){
     
         var value = document.getElementById("inputfield").value;
+       
          if (value) {
          var task = createNewTask(value);
          console.log ("this is task", task);
          taskArray(task);
          addingTaskInUI(task);
          }
+         document.getElementById("inputfield").value = null;
     }
 
 
@@ -52,7 +54,7 @@ function createNewTask(text){
      
      document.querySelector("#taskList_wrapper").insertAdjacentHTML('beforeend',newhtml);
     }
- //deleting item form UI and datastructure  
+ //deleting item from UI and datastructure  
     document.querySelector("#taskList_wrapper").addEventListener('click', typeOfEvent  );
 
 function typeOfEvent(event){
