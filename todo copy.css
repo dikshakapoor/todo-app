@@ -27,6 +27,7 @@ header{
   display: block;
   position: relative;
   background-color:#79C4F0;
+  position:relative;
 
     
 }
@@ -147,14 +148,15 @@ margin-left: 100px;
 
 
 }
-form h2 {position : relative;
+form h2 {
     
      padding : 15px;
     text-align : center;
 
 }
 form {
-    position : relative;
+    
+ 
     margin: 20px;
     width: 100%;
 }

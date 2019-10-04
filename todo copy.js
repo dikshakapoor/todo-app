@@ -162,7 +162,7 @@ function editSelectedItem(event){
 
 // mark all complete
 document.getElementById("markAllComplete").addEventListener ('click', function ()
- { var allTaskInUI=  document.getElementsByClassName("taskList");
+ { var allTaskInUI=  document.getElementsByClassName("card");
  for (let i =0; i< arr.length; i++)
    { arr[i].Completed = "true";
     allTaskInUI[i].classList.add("checked")};
@@ -173,7 +173,7 @@ document.getElementById("markAllComplete").addEventListener ('click', function (
 // delete all tast for UI
 document.getElementById("deleteAll").addEventListener ('click', function ()  
 
-{var allTaskInUI=  document.getElementsByClassName("taskList"); // deleting objects from UI
+{var allTaskInUI=  document.getElementsByClassName("card"); // deleting objects from UI
 console.log(allTaskInUI);
 while (allTaskInUI[0]){
     allTaskInUI[0].parentNode.removeChild(allTaskInUI[0]);
