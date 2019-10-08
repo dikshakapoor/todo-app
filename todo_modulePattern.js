@@ -108,48 +108,82 @@ var UIController  = (function(){
             console.log("it works");
         },
        
-        display: function(taskMap){
-             console.log(taskMap);
-             taskMap.forEach(function(task){
-                  
-                    if (task.completed == true) {
-                        document.getElementById(task.id).classList.add("checked");
-                    }
-                   if (task.deleted == true){
-                    console.log("task need to be deleted");
-                    let element = document.getElementById(task.id);
-                    console.log("element",element.parentNode);
-                    let element1= document.getElementById('taskList_wrapper');
-                    element1.removeChild(element.parentNode);
-                    taskMap.delete(task.id);
-                    console.log(taskMap);
-                    }
-                   if (task.edit == true){
-                    
-                    let element = document.getElementById(task.id);
+        displayCompletedTask: function(taskMap){
+            taskMap.forEach(function (task)
+            {if (task.completed == true)
+            document.getElementById(task.id).classList.add("checked");
+        })
+        },
+            
+        deletedTask: function(taskMap){ 
+            taskMap.forEach(function(task)
+            {if (task.deleted == true)
+                {let element = document.getElementById(task.id);
+                console.log("element",element.parentNode);
+                let element1= document.getElementById('taskList_wrapper');
+                element1.removeChild(element.parentNode);
+                taskMap.delete(task.id);}
+            }
+            )},
+        
+        displayEditedTask: function(taskMap){
+            taskMap.forEach ( function(task)
+            {if (task.edit == true)
+                    { let element = document.getElementById(task.id);
                     element.classList.remove("edit");
                     element.setAttribute("contenteditable", true);
                     element.focus();
                     element.addEventListener("keydown", function (e)
                     { if (e.keyCode === 13){  
-        
-                    element.classList.add("edit");
-                    var value = element.textContent;  
-                    element.setAttribute("contenteditable", false);
+                        element.classList.add("edit");
+                        var value = element.textContent;  
+                        element.setAttribute("contenteditable", false);
+                        task.text = value;
+                            }})
+                    } 
+            }
+            )},
+
+            
+                    // if (task.completed == true) {
+                    //     document.getElementById(task.id).classList.add("checked");
+                    // }
+        //            if (task.deleted == true){
+        //             console.log("task need to be deleted");
+        //             let element = document.getElementById(task.id);
+        //             console.log("element",element.parentNode);
+        //             let element1= document.getElementById('taskList_wrapper');
+        //             element1.removeChild(element.parentNode);
+        //             taskMap.delete(task.id);
+        //             console.log(taskMap);
+        //             }
+        //            if (task.edit == true){
                     
-                    // editing the array of task
-                    task.text = value;
-                    console.log (taskMap);
-                }
-            });
+        //             let element = document.getElementById(task.id);
+        //             element.classList.remove("edit");
+        //             element.setAttribute("contenteditable", true);
+        //             element.focus();
+        //             element.addEventListener("keydown", function (e)
+        //             { if (e.keyCode === 13){  
+        
+        //             element.classList.add("edit");
+        //             var value = element.textContent;  
+        //             element.setAttribute("contenteditable", false);
+                    
+        //             // editing the array of task
+        //             task.text = value;
+        //             console.log (taskMap);
+        //         }
+        //     });
               
-        }
+        // }
  
-      })
-    },
+     // }
+      
+    }
     
 }
-})();
+)();
 
 
 
@@ -199,14 +233,14 @@ var controller = (function(dataCtr, UICtr){    // changing the name of data and 
                 console.log("this is item id ", itemID);
                 if (eventType == "complete") 
                 {  let taskEdited = dataCtr.compeleteSelectedItem(itemID );
-                UICtr.display(taskEdited);}
+                   UICtr.displayCompletedTask(taskEdited);}
                 else if (eventType == "remove") 
                 {  console.log("type of event works for remove");
                     let taskEdited = dataCtr.deleteSelectedItem(itemID);
-                    UICtr.display(taskEdited);}
+                    UICtr.deletedTask(taskEdited);}
                 else if(eventType == "edit") 
                 {   let taskEdited = dataCtr.editSelectedItem(itemID );
-                    UICtr.display(taskEdited);}
+                    UICtr.displayEditedTask(taskEdited);}
 
             }
      }    
@@ -215,7 +249,7 @@ var controller = (function(dataCtr, UICtr){    // changing the name of data and 
     { 
          let taskCompelete = dataCtr.completeAll();
          console.log(taskCompelete);
-         UICtr.display(taskCompelete);
+         UICtr.displayCompletedTask(taskCompelete);
     
     });
 
@@ -224,7 +258,7 @@ var controller = (function(dataCtr, UICtr){    // changing the name of data and 
     {  
          let  taskRemoved = dataCtr.removeAll();
          console.log(taskRemoved);
-         UICtr.display(taskRemoved);
+         UICtr.deletedTask(taskRemoved);
          
     });
 
