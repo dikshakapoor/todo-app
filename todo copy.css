@@ -23,12 +23,11 @@ ul {
 
 }
 header{
-    width: 1200px;
-  height: 70px;
-  display: block;
-  position: relative;
-  background-color:#79C4F0;
-  position: fixed;
+     width: 1200px;
+    height: 70px;
+    display: block;
+    background-color:#79C4F0;
+    position: absolute;
 
     
 }
@@ -36,26 +35,13 @@ strong {
     color: white;
 
 }
-/* header::after {
-    content: "";
-  
-  
-  width: 1200px;
-  height: 100px;
-  opacity: 0.5;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  
-  } */
+
 .logo{
     margin-left : 50px;
     border-radius : 3px;
     width: 50px;
-  height: 50px;
-  box-shadow: 5px 5px;
+    height: 50px;
+    box-shadow: 5px 5px;
 }
 
 .nav ul {
@@ -68,8 +54,8 @@ strong {
     display: inline-block;
     text-color: white;
     margin-left: 250px;
-   padding-top: 20px;
-   margin-right: 50px;
+    padding-top: 20px;
+    margin-right: 50px;
    
 }
 
@@ -87,17 +73,16 @@ strong {
 }
 
 .nav a::before {
-    
-content: "";
-display : block;
-height: 5px;
-width : 100%;
-background-color:black;
-margin-top: -20px;
-width: 0%; 
-transition: all ease-in-out 250ms;
-position : absolute;
-margin-left: 100px;
+    content: "";
+    display : block;
+    height: 5px;
+    width : 100%;
+    background-color:black;
+    margin-top: -20px;
+    width: 0%; 
+    transition: all ease-in-out 250ms;
+    position : absolute;
+    margin-left: 100px;
 }
 
 .nav a:hover::before{
@@ -108,9 +93,9 @@ margin-left: 100px;
 
 /* Style the input container */
 .input-container {
-  display: flex;
-  width: 100%;
-  margin-bottom: 15px;
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 /* Style the form icons */
@@ -118,33 +103,33 @@ margin-left: 100px;
 
 /* Style the input fields */
 #inputfield {
-  width: 100%;
-  padding: 10px;
-  outline: none;
-  border-radius: 15px;
-  height: 50px;
-  font-size: 15px;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border-radius: 15px;
+    height: 50px;
+    font-size: 15px;
   
 }
 
 #inputfield:focus {
-  border: 2px solid dodgerblue;
+    border: 2px solid dodgerblue;
 }
 
 /* Set a style for the submit button */
 #btn {
-  background-color:#79C4F0;
-  color: white;
-  padding: 15px 20px;
-  border: none;
-  cursor: pointer;
-  width: 10%;
-  opacity: 0.9;
-  border-radius: 5px;
-  box-shadow: #87c4ff;
-  box-shadow: 5px;
-  font-size : 14px;
-  position: relative;
+    background-color:#79C4F0;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    width: 10%;
+    opacity: 0.9;
+    border-radius: 5px;
+    box-shadow: #88c3fd;
+    box-shadow: 5px;
+    font-size : 14px;
+    position: relative;
 
 
 }
@@ -157,7 +142,7 @@ form h2 {
 
 }
 form {
-    position: fixed;
+    position: absolute;
     margin-top: 100px;
     /* margin: 20px; */
     width: 100%;
@@ -170,7 +155,8 @@ form {
 
 #btn:hover {
     
-  opacity: 1;
+    opacity: 1;
+    background-color:rgb(98, 184, 235);
 }
 
 
@@ -180,25 +166,11 @@ form {
     overflow: scroll;
     height: 400px;
     width:1200px;
-    /* width: 100%;
-    padding-left: 30px;
-    height: 50px;
-    border : solid silver;
-   border-width: 2px;
-   border-style: inset;
-   border-radius : 15px;
-   font: 400 15px system-ui;
-   color: initial;
-   box-shadow: 5px;
-   padding : 10px;
-   overflow: scroll;
-   float : left;
-   margin-bottom:20px;
-   text-decoration : none; */
+    
 }
 
 li img
-{ position : relative;
+{   position : relative;
     float: right;
     width: 20px;
     height: 20px;
@@ -206,9 +178,9 @@ li img
     margin-top: -15px; */
 
 }
- .taskList{ position: inline-block;
+ .taskList{ 
+    position: inline-block;
     width : auto;
-    
     overflow: scroll;
  
 }
@@ -231,18 +203,18 @@ span {
  
 }
 
-  body {
+body {
     font-family: Arial, Helvetica, sans-serif;
     
   }
   
   /* css for card */
-  .card{
-     display : flex;
-     justify-content: space-between;
+.card{
+    display : flex;
+    justify-content: space-between;
     width: 21%;
     margin-left: 6px;
-    height: 300px;
+    height: 250px;
     border-radius : 5px;
     margin-top : 40px;
     margin-right: 40px;
@@ -263,17 +235,13 @@ span {
     overflow: scroll;
 
 }
-/* p{display: flex;
-    align-items: center;
-    justify-content: center;
 
-} */
 
 .icon {
- width : 100%;
- height: 20%;
- display: flex;
- justify-content: center;
+    width : 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
 
 }
 .icon button{
@@ -281,10 +249,10 @@ span {
     justify-content: center;
     text-decoration : none;
     text-align: center;
-    margin :15px;
+    margin :10px;
     background-color: white;
     border: 1px solid black;
-    padding : 5px;
+    padding : 3px;
     border-radius:5px;
     cursor: pointer;
 }
