@@ -69,18 +69,18 @@ return  {
 // module for UI 
 var UIController  = (function(){
 
-    DOMStrings = {
-         inputValue: "#inputfield",
-         inputButton: "#btn",
-         inputContainer:"#taskList_wrapper",
-    }
+    // DOMStrings = {
+    //      inputValue: "#inputfield",
+    //      inputButton: "#btn",
+    //      inputContainer:"#taskList_wrapper",
+    // }
 
  return { getInput: function (){
-         return document.querySelector(DOMStrings.inputValue).value;
+         return document.querySelector("#inputfield").value;
             },
-         getDOMString: function (){
-             return DOMStrings ;
-        },
+        //  getDOMString: function (){
+        //      return DOMStrings ;
+        // },
         addListItem: function(task) {
             
             
@@ -109,7 +109,7 @@ var UIController  = (function(){
      
              // place the it into DOM
              newhtml = newhtml.replace('%id%',list.id);
-             element1 = DOMStrings.inputContainer;
+             element1 = "#taskList_wrapper";
              document.querySelector(element1).insertAdjacentHTML('beforeend',newhtml);
             
              if (list.edit == true)
@@ -138,88 +138,12 @@ var UIController  = (function(){
             
         })
     },
-        
-
+            
         clearFields: function (){
             document.getElementById("inputfield").value = "";
             console.log("it works");
         },
     }
-       
-        // displayCompletedTask: function(taskMap){
-        //     taskMap.forEach(function (task)
-        //     {if (task.completed == true)
-        //     document.getElementById(task.id).classList.add("checked");
-        // })
-        // },
-            
-        // deletedTask: function(taskMap){ 
-        //     taskMap.forEach(function(task)
-        //     {if (task.deleted == true)
-        //         {let element = document.getElementById(task.id);
-        //         console.log("element",element.parentNode);
-        //         let element1= document.getElementById('taskList_wrapper');
-        //         element1.removeChild(element.parentNode);
-        //         taskMap.delete(task.id);}
-        //     }
-        //     )},
-        
-        // displayEditedTask: function(taskMap){
-        //     taskMap.forEach ( function(task)
-        //     {if (task.edit == true)
-        //             { let element = document.getElementById(task.id);
-        //             element.classList.remove("edit");
-        //             element.setAttribute("contenteditable", true);
-        //             element.focus();
-        //             element.addEventListener("keydown", function (e)
-        //             { if (e.keyCode === 13){  
-        //                 element.classList.add("edit");
-        //                 var value = element.textContent;  
-        //                 element.setAttribute("contenteditable", false);
-        //                 task.text = value;
-        //                     }})
-        //             } 
-        //     }
-        //     )},
-
-            
-                    // if (task.completed == true) {
-                    //     document.getElementById(task.id).classList.add("checked");
-                    // }
-        //            if (task.deleted == true){
-        //             console.log("task need to be deleted");
-        //             let element = document.getElementById(task.id);
-        //             console.log("element",element.parentNode);
-        //             let element1= document.getElementById('taskList_wrapper');
-        //             element1.removeChild(element.parentNode);
-        //             taskMap.delete(task.id);
-        //             console.log(taskMap);
-        //             }
-        //            if (task.edit == true){
-                    
-        //             let element = document.getElementById(task.id);
-        //             element.classList.remove("edit");
-        //             element.setAttribute("contenteditable", true);
-        //             element.focus();
-        //             element.addEventListener("keydown", function (e)
-        //             { if (e.keyCode === 13){  
-        
-        //             element.classList.add("edit");
-        //             var value = element.textContent;  
-        //             element.setAttribute("contenteditable", false);
-                    
-        //             // editing the array of task
-        //             task.text = value;
-        //             console.log (taskMap);
-        //         }
-        //     });
-              
-        // }
- 
-     // }
-
-
-     //  ** display the list again
       
     }
 )();
@@ -232,8 +156,8 @@ var UIController  = (function(){
 var controller = (function(dataCtr, UICtr){    // changing the name of data and UI controller
      var input, addItem;
 
-     var DOM = UICtr.getDOMString();
-     console.log(DOM);
+    //  var DOM = UICtr.getDOMString();
+    //  console.log(DOM);
      var ctrlAddItem = function (){
         // get input data
          input = UICtr.getInput();
@@ -249,9 +173,9 @@ var controller = (function(dataCtr, UICtr){    // changing the name of data and 
          // clearing input field
          UICtr.clearFields();
         }
-}
+    }
      var setEventListeners = function () {
-         document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
+         document.querySelector("#btn").addEventListener('click', ctrlAddItem);
 
          document.addEventListener('keypress', function(event){
          if (event.keyCode === 13 || event.which === 13){

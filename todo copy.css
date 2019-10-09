@@ -52,7 +52,7 @@ strong {
 
 .nav li{
     display: inline-block;
-    text-color: white;
+    color: white;
     margin-left: 250px;
     padding-top: 20px;
     margin-right: 50px;
@@ -158,7 +158,6 @@ form {
     opacity: 1;
     background-color:rgb(98, 184, 235);
 }
-
 
 #taskList_wrapper {
     position: absolute;
