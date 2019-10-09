@@ -23,7 +23,7 @@ return  {
          taskMap.set(newTask.id, newTask );
 
          console.log(taskMap);
-         return newTask;
+         return taskMap;
         
     },
     testing : function (){
@@ -34,13 +34,14 @@ return  {
        
          
          taskMap.get(itemID).completed = true;
-         console.log(taskMap);
+        //  console.log(taskMap);
          return taskMap;
     },
     deleteSelectedItem: function(itemID ){
        
          taskMap.get(itemID).deleted = true;
          console.log("the deleteselectd works");
+         taskMap.delete((taskMap.get(itemID)).id);
          return taskMap;   
     
     },
@@ -51,17 +52,13 @@ return  {
     }, 
     completeAll: function() {
          taskMap.forEach(function(task){
-         task.completed = true;
-          
+         task.completed = true;    
     })
     return taskMap;},
 
     removeAll: function(){
-         taskMap.forEach(function(task){
-         task.deleted = true;
-         
-    
-    })
+        
+    taskMap.clear();
     return taskMap;},
     
 }
@@ -85,64 +82,105 @@ var UIController  = (function(){
              return DOMStrings ;
         },
         addListItem: function(task) {
-            var html,newhtml,element;
-                // create html string with placeholder tag;
+            
+            
+            let element = document.getElementById('taskList_wrapper');
+            var child = element.firstElementChild;  
+             while (child) { 
+                 element.removeChild(child); 
+                 child = element.lastElementChild; 
+                 }
 
-            html =  '<div class = "card"><div class = "task" id = %id%><b>%Value%</b>'+
-            '</div><div class = "icon"><button class = "complete"><img src =_ionicons_svg_md-checkmark-circle.svg width = "20px" heigth = "20px">'+
-            '</button><button class = "remove"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></button><button class = "edit">'+
-            '<img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></button></button></div></div>'
-                
-            //repclace palceholder with html text;
-            newhtml = html.replace('%Value%',task.text);
-                
-            // place the it into DOM
-            newhtml = newhtml.replace('%id%',task.id);
-            element = DOMStrings.inputContainer;
-            document.querySelector(element).insertAdjacentHTML('beforeend',newhtml);
+            
+           
+            task.forEach(function(list) {
 
-        },
+             var html,newhtml,element1;
+                 // create html string with placeholder tag;
+             
+             html =  '<div class = "card"><div class = "task" id = %id%><b>%Value%</b>'+
+             '</div><div class = "icon"><button class = "complete"><img src =_ionicons_svg_md-checkmark-circle.svg width = "20px" heigth = "20px">'+
+             '</button><button class = "remove"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></button><button class = "edit">'+
+             '<img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></button></button></div></div>'
+              
+             //repclace palceholder with html text;
+         
+             newhtml = html.replace('%Value%',list.text);
+     
+             // place the it into DOM
+             newhtml = newhtml.replace('%id%',list.id);
+             element1 = DOMStrings.inputContainer;
+             document.querySelector(element1).insertAdjacentHTML('beforeend',newhtml);
+            
+             if (list.edit == true)
+             { let element = document.getElementById(list.id);
+                element.classList.remove("edit");
+                element.setAttribute("contenteditable", true);
+                element.focus();
+                element.addEventListener("keydown", function (e)
+                    { if (e.keyCode === 13){  
+                
+                    element.classList.add("edit");
+                    var value = element.textContent;  
+                    element.setAttribute("contenteditable", false);
+                            
+                    // editing the map of task
+                    list.text = value;
+                    console.log (task);
+
+                        }
+                    }
+                )}
+            else if (list.completed == true)
+            {  
+                document.getElementById(list.id).classList.add("checked");
+            }
+            
+        })
+    },
+        
 
         clearFields: function (){
             document.getElementById("inputfield").value = "";
             console.log("it works");
         },
+    }
        
-        displayCompletedTask: function(taskMap){
-            taskMap.forEach(function (task)
-            {if (task.completed == true)
-            document.getElementById(task.id).classList.add("checked");
-        })
-        },
+        // displayCompletedTask: function(taskMap){
+        //     taskMap.forEach(function (task)
+        //     {if (task.completed == true)
+        //     document.getElementById(task.id).classList.add("checked");
+        // })
+        // },
             
-        deletedTask: function(taskMap){ 
-            taskMap.forEach(function(task)
-            {if (task.deleted == true)
-                {let element = document.getElementById(task.id);
-                console.log("element",element.parentNode);
-                let element1= document.getElementById('taskList_wrapper');
-                element1.removeChild(element.parentNode);
-                taskMap.delete(task.id);}
-            }
-            )},
+        // deletedTask: function(taskMap){ 
+        //     taskMap.forEach(function(task)
+        //     {if (task.deleted == true)
+        //         {let element = document.getElementById(task.id);
+        //         console.log("element",element.parentNode);
+        //         let element1= document.getElementById('taskList_wrapper');
+        //         element1.removeChild(element.parentNode);
+        //         taskMap.delete(task.id);}
+        //     }
+        //     )},
         
-        displayEditedTask: function(taskMap){
-            taskMap.forEach ( function(task)
-            {if (task.edit == true)
-                    { let element = document.getElementById(task.id);
-                    element.classList.remove("edit");
-                    element.setAttribute("contenteditable", true);
-                    element.focus();
-                    element.addEventListener("keydown", function (e)
-                    { if (e.keyCode === 13){  
-                        element.classList.add("edit");
-                        var value = element.textContent;  
-                        element.setAttribute("contenteditable", false);
-                        task.text = value;
-                            }})
-                    } 
-            }
-            )},
+        // displayEditedTask: function(taskMap){
+        //     taskMap.forEach ( function(task)
+        //     {if (task.edit == true)
+        //             { let element = document.getElementById(task.id);
+        //             element.classList.remove("edit");
+        //             element.setAttribute("contenteditable", true);
+        //             element.focus();
+        //             element.addEventListener("keydown", function (e)
+        //             { if (e.keyCode === 13){  
+        //                 element.classList.add("edit");
+        //                 var value = element.textContent;  
+        //                 element.setAttribute("contenteditable", false);
+        //                 task.text = value;
+        //                     }})
+        //             } 
+        //     }
+        //     )},
 
             
                     // if (task.completed == true) {
@@ -179,10 +217,11 @@ var UIController  = (function(){
         // }
  
      // }
+
+
+     //  ** display the list again
       
     }
-    
-}
 )();
 
 
@@ -209,7 +248,7 @@ var controller = (function(dataCtr, UICtr){    // changing the name of data and 
 
          // clearing input field
          UICtr.clearFields();
-}
+        }
 }
      var setEventListeners = function () {
          document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
@@ -233,14 +272,19 @@ var controller = (function(dataCtr, UICtr){    // changing the name of data and 
                 console.log("this is item id ", itemID);
                 if (eventType == "complete") 
                 {  let taskEdited = dataCtr.compeleteSelectedItem(itemID );
-                   UICtr.displayCompletedTask(taskEdited);}
+                    
+                   UICtr.addListItem(taskEdited);
+
+                   //UICtr.displayCompletedTask(taskEdited);
+                }
                 else if (eventType == "remove") 
                 {  console.log("type of event works for remove");
                     let taskEdited = dataCtr.deleteSelectedItem(itemID);
-                    UICtr.deletedTask(taskEdited);}
+                    UICtr.addListItem(taskEdited);}
+
                 else if(eventType == "edit") 
                 {   let taskEdited = dataCtr.editSelectedItem(itemID );
-                    UICtr.displayEditedTask(taskEdited);}
+                    UICtr.addListItem(taskEdited);}
 
             }
      }    
@@ -249,16 +293,16 @@ var controller = (function(dataCtr, UICtr){    // changing the name of data and 
     { 
          let taskCompelete = dataCtr.completeAll();
          console.log(taskCompelete);
-         UICtr.displayCompletedTask(taskCompelete);
+         UICtr.addListItem(taskCompelete);
     
     });
 
-// delete all tast for UI
+// delete all task for UI
     document.getElementById("deleteAll").addEventListener ('click', function ()  
     {  
          let  taskRemoved = dataCtr.removeAll();
          console.log(taskRemoved);
-         UICtr.deletedTask(taskRemoved);
+         UICtr.addListItem(taskRemoved);
          
     });
 
