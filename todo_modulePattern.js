@@ -1,44 +1,36 @@
 // module for data storage 
-var dataController = (function () {
-  var TaskObject = function (task) {
+let dataController = (function () {
+  let TaskObject = function (task) {
     this.text = task;
     this.id = Date.now();
-    this.completed = false;
-    this.deleted = false;
-    this.edited = false;
-    this.taskStatus = "";
-    // this.property = null;
+    this.status = "";
   };
-  var taskMap = new Map();
+  let taskMap = new Map();
   return {
     addTask: function (task) {
       let newTask;
       newTask = new TaskObject(task);
       taskMap.set(newTask.id, newTask);
-      console.log(taskMap);
       return taskMap;
     },
-    markTaskCompelete: function (itemId) { // name change 
-      taskMap.get(itemId).completed = true;
-      taskMap.get(itemId).taskStatus = "completed";
-      //  console.log(taskMap);
+    markTaskCompeleted: function (itemId) {
+      taskMap.get(itemId).status = "completed";
       return taskMap;
     },
     deleteTask: function (itemId) {
-      taskMap.get(itemId).deleted = true;
-      taskMap.get(itemId).taskStatus = "deleted"; // dont need this just setting 
-      console.log("the deleteselectd works");
       taskMap.delete(itemId);
       return taskMap;
     },
-    markTaskEdit: function (itemId) {
-      taskMap.get(itemId).edited = true;
-      taskMap.get(itemId).taskStatus = "edited";
+    markTaskEdited: function (itemId) {
+      taskMap.get(itemId).status = "edited";
       return taskMap;
+    },
+    updateTask: function (updatedTask, id) {
+      taskMap.get(id).text = updatedTask;
     },
     completeAll: function () {
       taskMap.forEach(function (task) {
-        task.completed = true;
+        task.status = "completed";
       })
       return taskMap;
     },
@@ -49,24 +41,25 @@ var dataController = (function () {
   }
 })();
 
-
-
 // module for UI 
-var UIController = (function () {
-  function editTaskOnEnter(element) {
+let UIController = (function () {
+  function editTaskOnEnter(id) {
     return function (ev) {
       if (ev.keyCode !== 13) return null;
+      element = document.getElementById(id);
       element.classList.add("edit");
       let task = element.textContent;
-
+      task.text = task; // doesnot works
       element.setAttribute("contenteditable", false);
-      // editing the map of task
-      task.text = task;
+      controller.editedTodoTask(task, id);
     }
   }
-
   return {
+    getEditedTask(task) {
+      this.todoTask = task;
+      return todoTask;
 
+    },
     getInput: function () {
       return document.querySelector(".inputfield").value;
     },
@@ -75,9 +68,8 @@ var UIController = (function () {
       element.classList.remove("edit");
       element.setAttribute("contenteditable", true);
       element.focus();
-      element.addEventListener("keyup", editTaskOnEnter(element)) // changed
+      element.addEventListener("keyup", editTaskOnEnter(task.id))
     },
-
     renderItems: function (taskList) {
       let element = document.getElementsByClassName('taskList_wrapper');
       element[0].innerHTML = "";
@@ -90,12 +82,9 @@ var UIController = (function () {
           '<img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></button></button></div></div>'
         //repclace palceholder with html text;
         html = html.replace('%value%', task.text);
-        // place the it into DOM
         html = html.replace('%id%', task.id);
         element[0].insertAdjacentHTML('beforeend', html);
-
-        //switch(task)
-        switch (task.taskStatus) {
+        switch (task.status) {
           case "edited":
             UIController.editTask(task);
             break;
@@ -106,42 +95,17 @@ var UIController = (function () {
       })
     },
     clearFields: function () {
-      document.getElementsByClassName("inputfield").value = "";
-      console.log("it works");
+      document.getElementsByClassName("inputfield")[0].value = "";
     },
   }
 })();
 
 //  global app controller
-var controller = (function (dataCtr, UICtr) {
-  var task, addItem;
-
-  // var typeOfEvent = function (event) {
-  //   console.log("working");
-  //   var eventType = event.target.parentNode.className;
-  //   console.log("the event is ", eventType);
-  //   if (eventType == "completed" || eventType == "removed" || eventType == "edited") {
-  //     itemId = parseInt(event.target.parentNode.parentNode.previousSibling.id);
-  //     console.log("this is item id ", itemId);
-  //     if (eventType == "completed") {
-  //       let taskList = dataCtr.markTaskCompelete(itemId);
-  //       UICtr.renderItems(taskList);
-  //       //UICtr.displayCompletedTask(taskEdited);
-  //     } else if (eventType == "removed") {
-  //       console.log("type of event works for remove");
-  //       let taskList = dataCtr.deleteTask(itemId);
-  //       UICtr.renderItems(taskList);
-  //     } else if (eventType == "edited") {
-  //       let taskList = dataCtr.markTaskEdit(itemId);
-  //       UICtr.renderItems(taskList);
-  //     }
-  //   }
-  // }
-  var ctrlAddItem = function () {
-    // get input data
+let controller = (function (dataCtr, UICtr) {
+  let task, addItem;
+  let ctrlAddItem = function () {
     task = UICtr.getInput().replace(/^\s+|\s+$/gm, '');
-    if ((task !== "") && (task !== undefined)) // checking input is present
-    { // add item to datacontroller
+    if ((task !== "") && (task !== undefined)) { // add item to datacontroller
       addItem = dataCtr.addTask(task);
       //add item to UIController
       UICtr.renderItems(addItem);
@@ -149,11 +113,11 @@ var controller = (function (dataCtr, UICtr) {
       UICtr.clearFields();
     }
   }
-  var setEventListeners = function () {
+  let setEventListeners = function () {
     document.getElementsByClassName("addTaskButton")[0].addEventListener('click', ctrlAddItem);
-
     document.getElementsByClassName("taskList_wrapper")[0].addEventListener('click', typeOfEvent);
     document.addEventListener('keypress', addTaskOnEnter(event));
+
   }
 
   function addTaskOnEnter(event) {
@@ -161,65 +125,50 @@ var controller = (function (dataCtr, UICtr) {
       ctrlAddItem();
     }
   }
-  // document.getElementsByClassName("taskList_wrapper")[0].addEventListener('click', typeOfEvent);
 
   function typeOfEvent(event) {
-    console.log("working");
-    var eventType = event.target.parentNode.className;
-    console.log("the event is ", eventType);
+    let eventType = event.target.parentNode.className;
     if (eventType == "completed" || eventType == "removed" || eventType == "edited") {
       itemId = parseInt(event.target.parentNode.parentNode.previousSibling.id);
-      console.log("this is item id ", itemId);
       switch (eventType) {
         case "completed": {
-          let taskList = dataCtr.markTaskCompelete(itemId);
+          let taskList = dataCtr.markTaskCompeleted(itemId);
           UICtr.renderItems(taskList);
           break;
         }
         case "removed": {
-          console.log("type of event works for remove");
           let taskList = dataCtr.deleteTask(itemId);
           UICtr.renderItems(taskList);
           break;
         }
         case "edited": {
-          let taskList = dataCtr.markTaskEdit(itemId);
+          let taskList = dataCtr.markTaskEdited(itemId);
           UICtr.renderItems(taskList);
           break;
         }
-        // if (eventType == "completed") {
-        //   let taskList = dataCtr.markTaskCompelete(itemId);
-        //   UICtr.renderItems(taskList);
-        //   //UICtr.displayCompletedTask(taskEdited);
-        // } else if (eventType == "removed") {
-        //   console.log("type of event works for remove");
-        //   let taskList = dataCtr.deleteTask(itemId);
-        //   UICtr.renderItems(taskList);
-        // } else if (eventType == "edited") {
-        //   let taskList = dataCtr.markTaskEdit(itemId);
-        //   UICtr.renderItems(taskList);
-        // }
       }
     }
   }
   document.getElementsByClassName("markAllComplete")[0].addEventListener('click', function () {
     let taskList = dataCtr.completeAll();
-    console.log(taskList);
     UICtr.renderItems(taskList);
-    dataCtr.resetTaskProperties();
   });
-  // delete all task for UI
   document.getElementsByClassName("deleteAll")[0].addEventListener('click', function () {
     let taskList = dataCtr.removeAll();
-    console.log(taskList);
     UICtr.renderItems(taskList);
   });
   return {
     init: function () {
-      console.log("Application has Started ");
       setEventListeners();
+    },
+    editedTodoTask: function (task, id) {
+      this.task = task;
+      this.id = id;
+      dataCtr.updateTask(task, id)
+
     }
   }
+
 })(dataController, UIController);
 
 controller.init();
