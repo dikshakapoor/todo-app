@@ -20,11 +20,13 @@ var dataController = (function () {
     },
     markTaskCompelete: function (itemId) { // name change 
       taskMap.get(itemId).completed = true;
+      taskMap.get(itemId).taskStatus = "completed";
       //  console.log(taskMap);
       return taskMap;
     },
     deleteTask: function (itemId) {
       taskMap.get(itemId).deleted = true;
+      taskMap.get(itemId).taskStatus = "deleted"; // dont need this just setting 
       console.log("the deleteselectd works");
       taskMap.delete(itemId);
       return taskMap;
@@ -51,17 +53,15 @@ var dataController = (function () {
 
 // module for UI 
 var UIController = (function () {
-  var editTaskOnEnter = function (e, element) {
-    if (e.keyCode === 13) {
+  function editTaskOnEnter(element) {
+    return function (ev) {
+      if (ev.keyCode !== 13) return null;
       element.classList.add("edit");
       let task = element.textContent;
-      console.log(task); // add to data module
+
       element.setAttribute("contenteditable", false);
-      console.log("the text edited", task);
       // editing the map of task
       task.text = task;
-      console.log(task.text);
-      console.log(taskList);
     }
   }
 
@@ -75,7 +75,7 @@ var UIController = (function () {
       element.classList.remove("edit");
       element.setAttribute("contenteditable", true);
       element.focus();
-      element.addEventListener("keydown", editTaskOnEnter(event, element)) // chnaged
+      element.addEventListener("keyup", editTaskOnEnter(element)) // changed
     },
 
     renderItems: function (taskList) {
@@ -95,11 +95,14 @@ var UIController = (function () {
         element[0].insertAdjacentHTML('beforeend', html);
 
         //switch(task)
-        task.taskStatus
-        if (task.edited == true) {
-          UIController.editTask(task);
-        } else if (task.completed == true)
-          document.getElementById(task.id).classList.add("checked");
+        switch (task.taskStatus) {
+          case "edited":
+            UIController.editTask(task);
+            break;
+          case "completed":
+            document.getElementById(task.id).classList.add("checked");
+            break;
+        }
       })
     },
     clearFields: function () {
@@ -173,20 +176,17 @@ var controller = (function (dataCtr, UICtr) {
           UICtr.renderItems(taskList);
           break;
         }
-
         case "removed": {
           console.log("type of event works for remove");
           let taskList = dataCtr.deleteTask(itemId);
           UICtr.renderItems(taskList);
           break;
         }
-
         case "edited": {
           let taskList = dataCtr.markTaskEdit(itemId);
           UICtr.renderItems(taskList);
           break;
         }
-
         // if (eventType == "completed") {
         //   let taskList = dataCtr.markTaskCompelete(itemId);
         //   UICtr.renderItems(taskList);
