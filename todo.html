@@ -1,80 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 
-     <style type = "text/css">
-
-       
-         body 
-          {
-            background-color:	#F5F5F5;
-         }
-         .text-display {
-            text-align: center;
-            
-        }
-        p{
-            text-align: center;
-            font-size: 1.5rem; 
-        }
-        h2{
-            margin-top : 4rem;
-            margin-bottom : 0px;
-            
-        }
-
-        .nav1 {
-            margin-top : 1rem;
-           
-           
-        }
-        
-       
-    
-            
-    </style>
 </head>
 
-
 <body>
-   <div class = "hero">
-    <div class = " container">
-        <div class = "nav1">
-            <ul class="nav nav-pills nav-fill">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="#">Add New Task</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Delete Selected</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Clear All</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link " href="#" tabindex="-1" aria-disabled="true">Mark All Complete</a>
-                    </li>
-                  </ul>
-                </div>
-              
-        <h2 class = "text-display">ToDo</h2>
-        <p class = "lead">Welcome to ToDo list </p>
-        <form class = " max eight col">
-                    <div class="input-group">
-                    
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter the Task">
-                    <span>
-                    <button type="submit" class="btn btn-primary">Add Task</button>
-                    </span>
-                </div>           
-         </form>
-    
-    </div>   
-</div>
+  <div class="container">
+    <header>
+      <img src="todo logo.png" alt="logo" style="width:50px;height:50px;" class="logo" radius: 2px>
+      <div class="nav">
+        <ul>
+          <li class="markAllComplete"><a href="#"> <strong> Mark All Complete</strong> </a></li>
+          <li class="deleteAll"><a href="#"><strong> Delete All</strong></a></li>
+        </ul>
+      </div>
+    </header>
+    <form onsubmit="return false">
+      <h2>TODO LIST</h2>
+      <div class="input-container">
+        <input class="inputfield" type="text" placeholder="TASK">
+      </div>
+      <div class="wrapper">
+        <button class="addTaskButton"><strong>ADD </strong></button>
+      </div>
+    </form>
+    <ul class="taskList_wrapper">
+    </ul>
+    <link rel="stylesheet" type="text/css" href="todo copy.css">
+    <script type='text/javascript' src="todo_modulePattern.js"> </script> -->
 </body>
+
 </html>

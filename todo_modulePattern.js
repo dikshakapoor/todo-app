@@ -49,7 +49,7 @@ let UIController = (function () {
       element = document.getElementById(id);
       element.classList.add("edit");
       let task = element.textContent;
-      task.text = task; // doesnot works
+      task.text = task;
       element.setAttribute("contenteditable", false);
       controller.editedTodoTask(task, id);
     }
@@ -76,12 +76,12 @@ let UIController = (function () {
       taskList.forEach(function (task) {
         let html;
         // create html string with placeholder tag
-        html = '<div class = "card"><div class = "task" id = %id%><b>%value%</b>' +
+        html = '<div class = "card"><div class = "task" id = %id%><b>%text%</b>' +
           '</div><div class = "icon"><button class = "completed"><img src =_ionicons_svg_md-checkmark-circle.svg width = "20px" heigth = "20px">' +
           '</button><button class = "removed"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></button><button class = "edited">' +
           '<img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></button></button></div></div>'
         //repclace palceholder with html text;
-        html = html.replace('%value%', task.text);
+        html = html.replace('%text%', task.text);
         html = html.replace('%id%', task.id);
         element[0].insertAdjacentHTML('beforeend', html);
         switch (task.status) {
@@ -117,7 +117,8 @@ let controller = (function (dataCtr, UICtr) {
     document.getElementsByClassName("addTaskButton")[0].addEventListener('click', ctrlAddItem);
     document.getElementsByClassName("taskList_wrapper")[0].addEventListener('click', typeOfEvent);
     document.addEventListener('keypress', addTaskOnEnter(event));
-
+    document.getElementsByClassName("markAllComplete")[0].addEventListener('click', markAllComplete);
+    document.getElementsByClassName("deleteAll")[0].addEventListener('click', deleteAll);
   }
 
   function addTaskOnEnter(event) {
@@ -149,23 +150,22 @@ let controller = (function (dataCtr, UICtr) {
       }
     }
   }
-  document.getElementsByClassName("markAllComplete")[0].addEventListener('click', function () {
+
+  function markAllComplete() {
     let taskList = dataCtr.completeAll();
     UICtr.renderItems(taskList);
-  });
-  document.getElementsByClassName("deleteAll")[0].addEventListener('click', function () {
+  };
+
+  function deleteAll() {
     let taskList = dataCtr.removeAll();
     UICtr.renderItems(taskList);
-  });
+  };
   return {
     init: function () {
       setEventListeners();
     },
     editedTodoTask: function (task, id) {
-      this.task = task;
-      this.id = id;
-      dataCtr.updateTask(task, id)
-
+      dataCtr.updateTask(task, id);
     }
   }
 
