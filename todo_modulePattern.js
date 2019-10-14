@@ -1,4 +1,3 @@
-// module for data storage 
 let dataController = (function () {
   let TaskObject = function (task) {
     this.text = task;
@@ -7,13 +6,13 @@ let dataController = (function () {
   };
   let taskMap = new Map();
   return {
-    addTask: function (task) {
+    addNewTask: function (task) {
       let newTask;
       newTask = new TaskObject(task);
       taskMap.set(newTask.id, newTask);
       return taskMap;
     },
-    markTaskCompeleted: function (itemId) {
+    setStatusCompeleted: function (itemId) {
       taskMap.get(itemId).status = "completed";
       return taskMap;
     },
@@ -21,27 +20,27 @@ let dataController = (function () {
       taskMap.delete(itemId);
       return taskMap;
     },
-    markTaskEdited: function (itemId) {
+    setStatusEdited: function (itemId) {
       taskMap.get(itemId).status = "edited";
       return taskMap;
     },
     updateTask: function (updatedTask, id) {
       taskMap.get(id).text = updatedTask;
     },
-    completeAll: function () {
+    markListCompleted: function () {
       taskMap.forEach(function (task) {
         task.status = "completed";
       })
       return taskMap;
     },
-    removeAll: function () {
+    deleteTodoList: function () {
       taskMap.clear();
       return taskMap;
     },
   }
 })();
 
-// module for UI 
+
 let UIController = (function () {
   function editTaskOnEnter(id) {
     return function (ev) {
@@ -51,15 +50,11 @@ let UIController = (function () {
       let task = element.textContent;
       task.text = task;
       element.setAttribute("contenteditable", false);
-      controller.editedTodoTask(task, id);
+      controller.updateEditedTask(task, id);
     }
   }
   return {
-    getEditedTask(task) {
-      this.todoTask = task;
-      return todoTask;
 
-    },
     getInput: function () {
       return document.querySelector(".inputfield").value;
     },
@@ -75,12 +70,10 @@ let UIController = (function () {
       element[0].innerHTML = "";
       taskList.forEach(function (task) {
         let html;
-        // create html string with placeholder tag
         html = '<div class = "card"><div class = "task" id = %id%><b>%text%</b>' +
           '</div><div class = "icon"><button class = "completed"><img src =_ionicons_svg_md-checkmark-circle.svg width = "20px" heigth = "20px">' +
           '</button><button class = "removed"><img src = "_ionicons_svg_md-trash.svg"  width = "20px" height = "20px"></button><button class = "edited">' +
           '<img src = "_ionicons_svg_md-create.svg" width = "20px" heigth = "20px"></button></button></div></div>'
-        //repclace palceholder with html text;
         html = html.replace('%text%', task.text);
         html = html.replace('%id%', task.id);
         element[0].insertAdjacentHTML('beforeend', html);
@@ -94,23 +87,23 @@ let UIController = (function () {
         }
       })
     },
-    clearFields: function () {
+    clearInputField: function () {
       document.getElementsByClassName("inputfield")[0].value = "";
     },
   }
 })();
 
-//  global app controller
+
 let controller = (function (dataCtr, UICtr) {
   let task, addItem;
   let ctrlAddItem = function () {
     task = UICtr.getInput().replace(/^\s+|\s+$/gm, '');
     if ((task !== "") && (task !== undefined)) { // add item to datacontroller
-      addItem = dataCtr.addTask(task);
+      addItem = dataCtr.addNewTask(task);
       //add item to UIController
       UICtr.renderItems(addItem);
       // clearing input field
-      UICtr.clearFields();
+      UICtr.clearInputField();
     }
   }
   let setEventListeners = function () {
@@ -133,7 +126,7 @@ let controller = (function (dataCtr, UICtr) {
       itemId = parseInt(event.target.parentNode.parentNode.previousSibling.id);
       switch (eventType) {
         case "completed": {
-          let taskList = dataCtr.markTaskCompeleted(itemId);
+          let taskList = dataCtr.setStatusCompeleted(itemId);
           UICtr.renderItems(taskList);
           break;
         }
@@ -143,7 +136,7 @@ let controller = (function (dataCtr, UICtr) {
           break;
         }
         case "edited": {
-          let taskList = dataCtr.markTaskEdited(itemId);
+          let taskList = dataCtr.setStatusEdited(itemId);
           UICtr.renderItems(taskList);
           break;
         }
@@ -152,19 +145,19 @@ let controller = (function (dataCtr, UICtr) {
   }
 
   function markAllComplete() {
-    let taskList = dataCtr.completeAll();
+    let taskList = dataCtr.markListCompleted();
     UICtr.renderItems(taskList);
   };
 
   function deleteAll() {
-    let taskList = dataCtr.removeAll();
+    let taskList = dataCtr.deleteTodoList();
     UICtr.renderItems(taskList);
   };
   return {
     init: function () {
       setEventListeners();
     },
-    editedTodoTask: function (task, id) {
+    updateEditedTask: function (task, id) {
       dataCtr.updateTask(task, id);
     }
   }
