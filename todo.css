@@ -87,16 +87,12 @@ strong {
 
 }
 
-
 /* Style the input container */
 .input-container {
     display: flex;
     width: 100%;
     margin-bottom: 15px;
 }
-
-/* Style the form icons */
-
 
 /* Style the input fields */
 .inputfield {
@@ -143,8 +139,6 @@ form h2 {
 form {
     position: absolute;
     margin-top: 100px;
-    /* margin: 20px; */
-    width: 100%;
     width: 1200px;
     height: 70px;
 }
@@ -154,7 +148,6 @@ form {
 }
 
 .addTaskButton:hover {
-
     opacity: 1;
     background-color: rgb(98, 184, 235);
 }
@@ -165,7 +158,6 @@ form {
     overflow: scroll;
     height: 400px;
     width: 1200px;
-
 }
 
 li img {
@@ -173,8 +165,6 @@ li img {
     float: right;
     width: 20px;
     height: 20px;
-    /* margin-left: 20px;
-    margin-top: -15px; */
 
 }
 
@@ -185,8 +175,6 @@ li img {
 
 }
 
-
-
 li img:hover {
     background-color: silver;
     cursor: pointer;
@@ -196,12 +184,7 @@ li img:hover {
 
 .checked {
 
-    text-decoration: line-through !important;
-
-}
-
-span {
-    float: right;
+    text-decoration: line-through;
 
 }
 
@@ -268,7 +251,7 @@ button:hover {
 
 }
 
-.edit {
+.removeFocuss {
     outline: none;
 
 }
