@@ -26,7 +26,6 @@ let dataController = (function() {
     },
     updateTask: function(updatedTask, id) {
       taskMap.get(id).text = updatedTask;
-      console.log("the updated task", updatedTask);
     },
     markListCompleted: function() {
       taskMap.forEach(function(task) {
@@ -52,7 +51,7 @@ let UIController = (function() {
       element.setAttribute("contenteditable", true);
       element.focus();
     },
-    renderItems: function(taskList, callback) {
+    renderItems: function(taskList) {
       let element = document.getElementsByClassName("taskList_wrapper");
       element[0].innerHTML = "";
       taskList.forEach(function(task) {
@@ -68,7 +67,6 @@ let UIController = (function() {
         element[0].insertAdjacentHTML("beforeend", html);
         switch (task.status) {
           case "edited":
-            // UIController.editTask(task);
             {
               let element = document.getElementById(task.id);
               element.classList.remove("edit");
@@ -82,7 +80,6 @@ let UIController = (function() {
             break;
         }
       });
-      callback && callback();
       return taskList;
     },
     clearInputField: function() {
@@ -127,23 +124,11 @@ let controller = (function(dataCtr, UICtr) {
     }
   };
   function editTaskOnEnter(id) {
-    console.log("enter was pressed ");
-
     return function(ev) {
-      console.log("the target is ", ev.target);
-      console.log(
-        "the event target is ",
-        event.target.parentNode.parentNode.previousSibling.id
-      );
-      console.log(ev.keyCode);
-      console.log("enter was pressed ");
       if (ev.keyCode !== 13 || ev.which !== 13) return null;
-
-      console.log("enter was pressed ");
       element = document.getElementById(id);
       element.classList.add("edit");
       let task = element.textContent;
-      console.log("the text entered", task);
       element.setAttribute("contenteditable", false);
 
       updateEditedTask(task, id);
@@ -163,9 +148,6 @@ let controller = (function(dataCtr, UICtr) {
       fetchEventType == "removed" ||
       fetchEventType == "edited"
     ) {
-      console.log(
-        parseInt(event.target.parentNode.parentNode.previousSibling.id)
-      );
       itemId = parseInt(
         parseInt(event.target.parentNode.parentNode.previousSibling.id)
       );
@@ -183,9 +165,8 @@ let controller = (function(dataCtr, UICtr) {
         }
         case "edited": {
           let taskList = dataCtr.setStatusEdited(itemId);
-          UICtr.renderItems(taskList, () =>
-            setEventListeners(itemId.toString())
-          );
+          UICtr.renderItems(taskList);
+          setEventListeners(itemId.toString());
           break;
         }
       }
