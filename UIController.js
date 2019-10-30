@@ -1,18 +1,17 @@
-let UIController = (function() {
+let UIController = (function () {
   return {
-    getInput: function() {
+    getInput: function () {
       return document.querySelector(".inputfield").value;
     },
-    editTask: function(task) {
+    editTask: function (task) {
       let element = document.getElementById(task.id);
-      element.classList.remove("edit");
       element.setAttribute("contenteditable", true);
       element.focus();
     },
-    renderItems: function(taskList) {
+    renderItems: function (taskList) {
       let element = document.getElementsByClassName("taskList_wrapper");
       element[0].innerHTML = "";
-      taskList.forEach(function(task) {
+      taskList.forEach(function (task) {
         let html;
         html =
           '<div class = "card"><div class = "task" id = %id%><b>%text%</b>' +
@@ -23,24 +22,22 @@ let UIController = (function() {
         html = html.replace("%text%", task.text);
         html = html.replace("%id%", task.id);
         element[0].insertAdjacentHTML("beforeend", html);
+        let selectedElement = document.getElementById(task.id);
         switch (task.status) {
           case "edited":
             {
-              let element = document.getElementById(task.id);
-              element.classList.remove("edit");
-              element.setAttribute("contenteditable", true);
-
-              element.focus();
+              selectedElement.setAttribute("contenteditable", true);
+              selectedElement.focus();
             }
             break;
           case "completed":
-            document.getElementById(task.id).classList.add("checked");
+            selectedElement.classList.add("checked");
             break;
         }
       });
       return taskList;
     },
-    clearInputField: function() {
+    clearInputField: function () {
       document.getElementsByClassName("inputfield")[0].value = "";
     }
   };

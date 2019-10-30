@@ -1,20 +1,19 @@
-let controller = (function(dataCtr, UICtr) {
+let controller = (function (dataCtr, UICtr) {
   let task, addItem;
-  let fetchNewTask = function() {
-    task = UICtr.getInput().replace(/^\s+|\s+$/gm, "");
-    if (task !== "" && task !== undefined) {
-      // add item to datacontroller
-      addItem = dataCtr.addNewTask(task);
-      //add item to UIController
-      UICtr.renderItems(addItem);
-      // clearing input field
-      UICtr.clearInputField();
-    }
+  let createTask = function () {
+    task = UICtr.getInput().trim();
+    if (!task) return;
+    // add item to datacontroller
+    addItem = dataCtr.addNewTask(task);
+    //add item to UIController
+    UICtr.renderItems(addItem);
+    // clearing input field
+    UICtr.clearInputField();
   };
-  let setEventListeners = function(updateItemId) {
+  let setEventListeners = function (updateItemId) {
     document
       .getElementsByClassName("addTaskButton")[0]
-      .addEventListener("click", fetchNewTask);
+      .addEventListener("click", createTask);
     document
       .getElementsByClassName("taskList_wrapper")[0]
       .addEventListener("click", getTypeOfEvent);
@@ -33,14 +32,14 @@ let controller = (function(dataCtr, UICtr) {
         .addEventListener("keyup", editTaskOnEnter(updateItemId));
     }
   };
+
   function editTaskOnEnter(id) {
-    return function(ev) {
+    return function (ev) {
       if (ev.keyCode !== 13 || ev.which !== 13) return null;
       element = document.getElementById(id);
-      element.classList.add("edit");
+      element.classList.add("removeFocus");
       let task = element.textContent;
       element.setAttribute("contenteditable", false);
-
       updateEditedTask(task, id);
     };
   }
@@ -98,7 +97,7 @@ let controller = (function(dataCtr, UICtr) {
     UICtr.renderItems(taskList);
   }
   return {
-    init: function() {
+    init: function () {
       setEventListeners();
     }
   };

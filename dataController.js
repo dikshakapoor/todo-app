@@ -1,39 +1,40 @@
-let dataController = (function() {
-  let TaskObject = function(task) {
+let dataController = (function () {
+  let TaskObject = function (task) {
     this.text = task;
     this.id = Date.now();
     this.status = "";
   };
   let taskMap = new Map();
   return {
-    addNewTask: function(task) {
+    addNewTask: function (task) {
       let newTask;
       newTask = new TaskObject(task);
       taskMap.set(newTask.id, newTask);
       return taskMap;
     },
-    setStatusCompeleted: function(itemId) {
+    setStatusCompeleted: function (itemId) {
       taskMap.get(itemId).status = "completed";
       return taskMap;
     },
-    deleteTask: function(itemId) {
+    deleteTask: function (itemId) {
       taskMap.delete(itemId);
       return taskMap;
     },
-    setStatusEdited: function(itemId) {
+    setStatusEdited: function (itemId) {
       taskMap.get(itemId).status = "edited";
       return taskMap;
     },
-    updateTask: function(updatedTask, id) {
+    updateTask: function (updatedTask, id) {
       taskMap.get(id).text = updatedTask;
+      taskMap.get(id).status = "";
     },
-    markListCompleted: function() {
-      taskMap.forEach(function(task) {
+    markListCompleted: function () {
+      taskMap.forEach(function (task) {
         task.status = "completed";
       });
       return taskMap;
     },
-    deleteTodoList: function() {
+    deleteTodoList: function () {
       taskMap.clear();
       return taskMap;
     }
