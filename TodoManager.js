@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import './TodoManager.css';
 import NavigationBar from "./NavigationBar";
 import TodoItemList from "./TodoItemList";
-
+import Form from "./Form";
 class TodoManager extends React.Component {
   constructor(props) {
     super(props)
@@ -12,14 +12,13 @@ class TodoManager extends React.Component {
     }
   }
 
-  onInputSubmit = () => {
-    const { taskList, currentInputValue } = this.state; // destructure
-    const textValue = currentInputValue.trim();
-    if (!textValue) return;
+  inputTask = (currentValue, currentInputValue) => {
+    const { taskList } = this.state; // destructure
+
 
     const newTask = {
       id: Date.now(),
-      discription: textValue,
+      discription: currentValue,
       completedTaskStatus: false,
       updatedTaskStatus: false,
     };
@@ -29,22 +28,30 @@ class TodoManager extends React.Component {
     }, this.createNewTask)
   }
 
-  keyPressHandle = (event) => {
-    if (event.which === 13) {
-      this.onInputSubmit();
-    }
-  }
+  // keyPressHandle = (event) => {
+  //   if (event.which === 13) {
+  //     this.onInputSubmit();
+  //   }
+  // }
 
-  handleInputChange = (ev) => {
-    let task = ev.target.value;
-    this.setState({
-      currentInputValue: task,
-    })
-  }
+  // handleInputChange = (ev) => {
+  //   let task = ev.target.value;
+  //   this.setState({
+  //     currentInputValue: task,
+  //   })
+  // }
 
   // this is to update the state after deleting a id
+
+  // inputValue = (taskList) => {
+  //   this.setState({ taskList })
+  // }
+  // inputTask = (currentValue) => {
+
+  // }
+
   handleDeltedItem = (itemToBeDeleted) => {
-    let updatedList = this.state.taskList.filter(function (taskList) {
+    const updatedList = this.state.taskList.filter(function (taskList) {
       return taskList.id !== itemToBeDeleted;
     })
     this.setState({ taskList: updatedList })
@@ -52,7 +59,7 @@ class TodoManager extends React.Component {
   }
 
   handleCompletedItem = (itemToBeCompleted) => {
-    let updatedList = this.state.taskList.map((task) => {
+    const updatedList = this.state.taskList.map((task) => {
       if (task.id === itemToBeCompleted) {
         task.completedTaskStatus = !task.completedTaskStatus;
         return task;
@@ -62,25 +69,22 @@ class TodoManager extends React.Component {
     this.setState({ taskList: updatedList })
   }
 
-  handleEditedTask = (event, id) => {
-    let updatedList = this.state.taskList.map((task) => {
-      if (event.which === 13 && task.id === id) {
+  handleEditedTask = (editedTask, id) => {
+    const updatedList = this.state.taskList.map((task) => {
+      if (task.id === id) {
 
-        task.discription = event.currentTarget.value;
+        task.discription = editedTask;
         task.updatedTaskStatus = false;
         task.completedTaskStatus = false;
         return task
       }
       return task
-
     })
-
     this.setState({ taskList: updatedList })
-
   }
 
   markAllCompelte = () => {
-    let updatedList = this.state.taskList.map((task) => {
+    const updatedList = this.state.taskList.map((task) => {
       task.completedTaskStatus = true;
       return task;
     })
@@ -88,12 +92,11 @@ class TodoManager extends React.Component {
   }
 
   deleteAll = () => {
-    let updatedList = [];
-    this.setState({ taskList: updatedList })
+    this.setState({ taskList: [] })
   }
 
   updatedTaskList = (id) => {
-    let updatedList = this.state.taskList.map((task) => {
+    const updatedList = this.state.taskList.map((task) => {
       if (task.id === id) {
         task.updatedTaskStatus = true;
         return task
@@ -104,26 +107,16 @@ class TodoManager extends React.Component {
     this.setState({ taskList: updatedList })
   }
 
+
   render() {
-    const { currentInputValue, taskList } = this.state;
+    const { taskList } = this.state;
     return (
       <div className="container">
         <NavigationBar markAllCompelte={this.markAllCompelte} deleteAll={this.deleteAll} />
         <h2>TODO LIST</h2>
-        <div className="input-container">
-          <input
-            className="inputfield" type="text"
-            value={currentInputValue}
-            placeholder="Type here.."
-            onKeyPress={this.keyPressHandle}
-            onChange={this.handleInputChange}
-          />
-        </div>
-        <div className="wrapper">
-          <button onClick={this.onInputSubmit} className="addTaskButton">
-            <strong>ADD </strong>
-          </button>
-        </div>
+        <Form inputTask={this.inputTask} currnetInputValue={this.state.currentInputValue} />
+
+        {/* <Form currentInputValue={this.currentInputValue} keyPressHandle={this.keyPressHandle} handleInputChange={this.handleInputChange} /> */}
         <ul className="taskList_wrapper">
           <TodoItemList entries={taskList} handleDeltedItem={this.handleDeltedItem} handleCompletedItem={this.handleCompletedItem}
             handleEditedTask={this.handleEditedTask}

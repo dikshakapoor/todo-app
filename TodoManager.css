@@ -11,7 +11,9 @@ ul {
 }
 
 .nav {
-  float: right;
+  display : flex;
+  justify-content : flex-end;
+  /* float: right; */
   cursor : pointer;
 }
 
@@ -22,11 +24,11 @@ ul {
 }
 
 .header {
-  width: 1200px;
-  height: 70px;
-  display: block;
+  width: 83%;
+  height: 15%;
   background-color: #79C4F0;
   position: absolute;
+  display: flex;
 }
 
 strong {
@@ -42,9 +44,12 @@ strong {
 }
 
 .nav ul {
+  display: flex;
+    justify-content: flex-end;
   margin: 0 auto;
   padding: 0 auto;
-  list-style: none
+  list-style: none;
+  width: 70vw;
 }
 
 .nav li {
@@ -101,19 +106,21 @@ strong {
 
 /* Set a style for the submit button */
 .addTaskButton {
-  margin-top: 100px;
-  background-color: #79C4F0;
-  color: white;
-  padding: 15px 20px;
-  border: none;
-  cursor: pointer;
-  width: 10%;
-  opacity: 0.9;
-  border-radius: 5px;
-  box-shadow: #88c3fd;
-  box-shadow: 5px;
-  font-size: 14px;
-  position: relative;
+    margin-top: 100px;
+    background-color: #79C4F0;
+    color: white;
+    /* padding: 15px 20px; */
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 10%;
+    opacity: 0.9;
+    border-radius: 5px;
+    box-shadow: #88c3fd;
+    box-shadow: 5px;
+    font-size: 14px;
+    position: relative;
+    text-align: center
 
 
 }
@@ -136,6 +143,7 @@ form {
 
 .wrapper {
   text-align: center;
+ 
 }
 
 .addTaskButton:hover {
@@ -146,8 +154,8 @@ form {
 .taskList_wrapper {
   position: absolute;
   overflow: scroll;
-  height: 600px;
-  width: 1200px;
+  height: 80%;
+    width: 83%;
 }
 
 li img {
