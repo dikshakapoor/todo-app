@@ -24,8 +24,8 @@ let dataController = (function () {
       taskMap.get(itemId).status = "edited";
       return taskMap;
     },
-    updateTask: function (updatedTask, id) {
-      taskMap.get(id).text = updatedTask;
+    setEditedTask: function (editedTask, id) {
+      taskMap.get(id).text = editedTask;
       taskMap.get(id).status = "";
     },
     markListCompleted: function () {
@@ -37,6 +37,12 @@ let dataController = (function () {
     deleteTodoList: function () {
       taskMap.clear();
       return taskMap;
+    },
+    setEditedTask: function (taskListObj, itemId) {
+      taskMap.get(itemId).text = taskListObj.editedTaskDescription;
+      return taskMap;
+
+
     }
   };
 })();

@@ -1,6 +1,6 @@
 let controller = (function (dataCtr, UICtr) {
   let task, addItem;
-  let createTask = function () {
+  let fetchNewTask = function () {
     task = UICtr.getInput().trim();
     if (!task) return;
     // add item to datacontroller
@@ -11,35 +11,38 @@ let controller = (function (dataCtr, UICtr) {
     UICtr.clearInputField();
   };
   let setEventListeners = function (updateItemId) {
+    debugger;
     document
-      .getElementsByClassName("addTaskButton")[0]
-      .addEventListener("click", createTask);
+      .getElementById("addTaskButton")
+      .addEventListener("click", fetchNewTask);
     document
-      .getElementsByClassName("taskList_wrapper")[0]
+      .getElementById("taskList_wrapper")
       .addEventListener("click", getTypeOfEvent);
     document
-      .getElementsByClassName("inputfield")[0]
+      .getElementById("inputfield")
       .addEventListener("keypress", addTaskOnEnter);
     document
-      .getElementsByClassName("markAllComplete")[0]
+      .getElementById("markAllComplete")
       .addEventListener("click", markAllComplete);
     document
-      .getElementsByClassName("deleteAll")[0]
+      .getElementById("deleteAll")
       .addEventListener("click", deleteAll);
-    if (updateItemId) {
-      document
-        .getElementById(updateItemId)
-        .addEventListener("keyup", editTaskOnEnter(updateItemId));
-    }
-  };
+    // if (updateItemId) {
 
+    //   document
+    //     .getElementById("editedTaskInputField")
+    //     .addEventListener("keyup", editTaskOnEnter(updateItemId)(event));
+    // }
+  };
+  debugger;
+  // function taskModifierFromConrollerCallback ()
   function editTaskOnEnter(id) {
     return function (ev) {
       if (ev.keyCode !== 13 || ev.which !== 13) return null;
-      element = document.getElementById(id);
+      element = document.getElementById("editedTaskInputField");
       element.classList.add("removeFocus");
-      let task = element.textContent;
-      element.setAttribute("contenteditable", false);
+      let task = element.value;
+      // element.setAttribute("contenteditable", false);
       updateEditedTask(task, id);
     };
   }
@@ -74,7 +77,9 @@ let controller = (function (dataCtr, UICtr) {
         }
         case "edited": {
           let taskList = dataCtr.setStatusEdited(itemId);
-          UICtr.renderItems(taskList);
+          taskObj = UICtr.renderItems(taskList);
+
+          dataCtr.setEditedTask(taskObj, itemId);
           setEventListeners(itemId.toString());
           break;
         }
@@ -84,7 +89,7 @@ let controller = (function (dataCtr, UICtr) {
 
   function updateEditedTask(task, Id) {
     Id = Number(Id);
-    dataCtr.updateTask(task, Id);
+    dataCtr.setEditedTask(task, Id);
   }
 
   function markAllComplete() {

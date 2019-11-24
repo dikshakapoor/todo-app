@@ -73,7 +73,7 @@ strong {
     content: "";
     display: block;
     height: 5px;
-    width: 100%;
+    /* width: 100%; */
     background-color: black;
     margin-top: -20px;
     width: 0%;
@@ -95,7 +95,8 @@ strong {
 }
 
 /* Style the input fields */
-.inputfield {
+#inputfield {
+    
     width: 100%;
     padding: 10px;
     outline: none;
@@ -105,12 +106,13 @@ strong {
 
 }
 
-.inputfield:focus {
+#inputfield:focus {
     border: 2px solid dodgerblue;
 }
 
 /* Set a style for the submit button */
-.addTaskButton {
+#addTaskButton {
+    
     background-color: #79C4F0;
     color: white;
     padding: 15px 20px;
@@ -122,7 +124,8 @@ strong {
     box-shadow: #88c3fd;
     box-shadow: 5px;
     font-size: 14px;
-    position: relative;
+    position: absolute;
+
 
 
 }
@@ -147,15 +150,16 @@ form {
     text-align: center;
 }
 
-.addTaskButton:hover {
+#addTaskButton:hover {
     opacity: 1;
     background-color: rgb(98, 184, 235);
 }
 
-.taskList_wrapper {
+#taskList_wrapper {
     position: absolute;
     margin-top: 300px;
     overflow: scroll;
+   
     height: 400px;
     width: 1200px;
 }

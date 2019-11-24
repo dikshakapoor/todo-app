@@ -15,21 +15,21 @@
       <img src="todo logo.png" alt="logo" style="width:50px;height:50px;" class="logo" radius: 2px>
       <div class="nav">
         <ul>
-          <li class="markAllComplete"><a href="#"> <strong> Mark All Complete</strong> </a></li>
-          <li class="deleteAll"><a href="#"><strong> Delete All</strong></a></li>
+          <li id="markAllComplete"><a href="#"> <strong> Mark All Complete</strong> </a></li>
+          <li id="deleteAll"><a href="#"><strong> Delete All</strong></a></li>
         </ul>
       </div>
     </header>
     <form onsubmit="return false">
       <h2>TODO LIST</h2>
       <div class="input-container">
-        <input class="inputfield" type="text" placeholder="Type here..">
+        <input id="inputfield" type="text" placeholder="Type here..">
       </div>
       <div class="wrapper">
-        <button class="addTaskButton"><strong>ADD </strong></button>
+        <button id="addTaskButton"><strong>ADD </strong></button>
       </div>
     </form>
-    <ul class="taskList_wrapper">
+    <ul id="taskList_wrapper">
     </ul>
     <link rel="stylesheet" type="text/css" href="todo.css">
     <script type='text/javascript' src="UIController.js"> </script>
